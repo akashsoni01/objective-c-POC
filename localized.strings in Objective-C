@@ -1,0 +1,266 @@
+Top highlight
+iOS Localization Tutorial
+Go to the profile of Taka Mizutori
+Taka MizutoriFollow
+Jul 25, 2016
+Localization is the process of making your app support other languages. In many cases, you make your app with English user interface first and then localize the app to other languages such as Japanese. 
+The process of localization is tedious, and steps of it change little by little as XCode gets updated. In this blog post I am going to explain the whole steps based on the latest XCode which is XCode 7. 3.1.
+Before starting localization work, make sure you have “Use Base Internationalization” checkmark selected.
+
+What is “Base Internationalization” ?
+When you create new XCode project, XCode will automatically generate resources and the file structure including them for the default language.
+
+This is so-called “Base” language. If you are making your app for global market, normally you want to use English texts in this “Base” language resources.
+Adding New Localization
+Ok, we have the Base language resource structure by default. Let’s add new language support. 
+Select your project file in Project Navigator, and select your project in the project and targets list. Open Info tab, and click “+” button under Localizations section. Then choose a language you want to support from the dropdown list shown.
+
+XCode opens a dialog showing resources to be added for the new language. Pressing the Finish button will generate these files under the new language project folder named [New Language].lproj. (In this example I added Japanese support, so ja.lproj folder is created.)
+
+Now, we have a file structure as below in the project folder.
+
+Where is Localizable.strings file ?
+Localizable.strings file is where you add translation data as key-value pairs.
+Earlier versions of XCode used to generate a Localizable.strings file by default, and we were able to easily duplicate the Localizable.strings file for other languages. 
+Recent versions of XCode doesn’t create Localizable.strings file by default. 
+To add Localizable.strings file, go to File->New->File , choose Strings File under Resource tab of iOS, name it Localizable.strings , and create the file.
+
+
+Now, you have a Localizable.strings file for Base language as below.
+
+To add Localizable.strings for Japanese, click Japanese in the File Inspector. This will create a new Localizable.strings file under the ja.lproj folder.
+
+We now have two Localizable.strings files — one under the Base.lproj folder and the other one under the ja.lproj folder.
+Let’s add words and phrases used in the app to the Localizable.strings file of Base.
+Below is an example where I added “Welcome” = “Welcome”;
+The left hand side is so called Key which is later used by NSLocalizedString method to pull out the text in the right hand side. This is key-value pair type of data.
+
+Below is the example of NSLocalizedString method. We set a key as the first parameter of the method. By specifying the key as the first parameter, the method can pull out the corresponding value from the Localizable.strings file and returns the value. In this example, I obtain localized strings for alert title, message, and buttons.
+
+Run the app, and we should see the alert with English text.
+
+As a next step, we add Japanese texts to a Localizable.strings file under the ja.lproj folder like below. We use the same keys but replace values with corresponding Japanese translations.
+
+After this, switch the phone language to Japanese on the iOS simulator, and run the app, you should see the alert with Japanese texts now.
+
+It is worksome to switch your phone language every time you check localization results. XCode has a nice feature to switch languages only within the app when you run the app on iOS Simulator.
+To do so, select Edit Scheme from the dropdown on the upper left corner of the XCode window, and change Application Language from System Language to Japanese (Refer the below screenshot if you got lost).
+This configuration doesn’t change the phone language of the simulator, but only changes the language environment within the app to the specified language. This is convenient when you add a few languages and want to switch between languages to check your localization result.
+
+Storyboard Localization
+Ok, now we know how to pull localized texts using NSLocalizedString and how to prepare data in Localizalbe.strings files. 
+This is enough for you to programmatically show localized texts to users. 
+Next step is supporting localization of texts which are set in Storyboards (like button titles) . If you set button titles or label texts in Storyboards and don’t change those texts programmatically in ViewControllers, you have to do localization on your Storyboard files. 
+To add translation data to the words used in Storyboards, first select the Storyboard file from the Project Navigator, then select and add Japanese in the File Inspector on the right. This creates [StoryboardFileName].strings file under the ja.lproj folder. In our example below, since the Storyboard file name is Main.storyboard, Main.strings (Japanese) is created.
+
+In Main.strings file, you will see something like below.
+
+Replace “Get Started” part of the line above to the corresponding Japanese phrase like,
+
+Run the app. The button title should be localized to Japanese properly.
+Pain to manage [Storyboard].strings files
+One headache is that Main.strings file won’t be updated when you add new UI components on the Storyboard file. 
+So you always have to add UI components first and then make Main.strings by turning on Japanese localization in the File Inspector.
+Localizing App Title
+To localize app title or other things defined in Info.plist file, create a InfoPlist.strings file.
+Go to File->New->File , choose Strings File under Resource tab of iOS , name it InfoPlist.strings. Select the Base.lproj folder as the location of InfoPlist.strings file. (By doing this, this InfoPlist.strings file is recognized as the one for the base language by XCode.)
+Normally we are interested in localizing these two values in info.plist file.
+CFBundleDisplayName — App name shown on the home screen
+NSHumanReadableCopyright — Copyright description (e.g. 2014 Goldrush Computing Inc. All right reserved)
+Set an app name and copyright for these two keys like below.
+
+Then in the File Inspector, check Japanese to add a InfoPlist.strings under the ja.lproj folder (you have to keep the InfoPlist.strings file selected when doing this).
+
+In the InfoPlist.strings (Japanese) file, replace the values with Japanese translation as below.
+
+Run the app and see if your app title is properly localized to Japanese.
+
+This is the entire process of localizing an app to another language.
+If you need help getting into Japanese market..
+I’m running an app development studio in Tokyo called Goldrush Computing.
+If you need any development force in Tokyo to localize your app and business in Japan, send me a mail.
+mizutori@goldrushcomputing.com
+iOSXcodeLocalizationLocalization ToolsSwift
+
+3.5K claps
+Applause from Payal Gupta, Harshita Arora, and 583 others
+33
+Follow
+Go to the profile of Taka Mizutori
+Taka Mizutori
+Director of Goldrush Computing Inc (www.goldrushcomputing.com). Keep making with Swift, Kotlin, Java, C, Obj-C, C#, Python, JS, and Assembly.
+Follow
+Lean Localization
+Lean Localization
+Explorer the potential power of app localization
+Related reads
+Networking in Swift the Right Way
+Go to the profile of Bob Roebling
+Bob Roebling
+Aug 11, 2018
+
+512
+
+Also tagged Localization
+What needs to be done to prepare a game for localization?
+Go to the profile of INLINGO Game Localization
+INLINGO Game Localization
+Apr 2
+
+27
+
+Related reads
+Threading in Swift Simply Explained
+Go to the profile of Gabriel Lewis
+Gabriel Lewis
+Sep 1, 2018
+
+2.9K
+
+Responses
+Akash Soni
+Write a response…
+Akash Soni
+Applause from Taka Mizutori (author)
+Go to the profile of Thibaut Prudat
+Thibaut Prudat
+May 2, 2018
+I’ve extended String to allow a less painful way to use NSLocalizedString:
+extension String {
+var localized : String {return NSLocalizedString(self, comment: “”)}
+}
+Then to call the localized version on your classic String:
+Read more…
+
+19
+
+Applause from Taka Mizutori (author)
+Go to the profile of Saoud M. Rizwan
+Saoud M. Rizwan
+Apr 4, 2017
+This is a great tutorial, awesome work!
+
+10
+
+Applause from Taka Mizutori (author)
+Go to the profile of Eerika B.
+Eerika B.
+Aug 26, 2016
+If you want to handle iOS app localization more efficiently, I recommend checking out the localization platform POEditor. It makes localization management a lot easier, especially if you’re using GitHub.
+
+13
+1 response
+Applause from Taka Mizutori (author)
+Go to the profile of Vald Serbin
+Vald Serbin
+May 7, 2018
+In addition, you can check Xcode “extractLocStrings” tool. That tool worth speaking.
+With this tool, you can grab all the strings from your project to generate strings file.
+For example:
+find ./-name “* .swift” -print0 | xargs -0 xcrun extractLocStrings -o en.lproj
+Read more…
+
+4
+
+Applause from Taka Mizutori (author)
+Go to the profile of sam :
+sam :
+Aug 1, 2017
+Very nice article. I am new to swift and I have already kept this site under my favourites. Before implementing a feature I always visit this site to get some jumpstart. Thanks for sharing
+
+2
+
+Applause from Taka Mizutori (author)
+Go to the profile of Virtual Test Account
+Virtual Test Account
+Aug 27, 2018
+Very good tutorial. Thanks very much for writing this out to help others..
+
+1
+
+Applause from Taka Mizutori (author)
+Go to the profile of Nikola Kesa Markovic
+Nikola Kesa Markovic
+Sep 4, 2017
+Best tutorial I’ve found. Keep up the good work m8! Thank you. Cheers!
+
+1
+
+Applause from Taka Mizutori (author)
+Go to the profile of Dmytro Pylypenko
+Dmytro Pylypenko
+Feb 20, 2018
+Thank you for the article. Content without useless information!
+
+1
+
+Applause from Taka Mizutori (author)
+Go to the profile of Bharathram Chandrasekaran
+Bharathram Chandrasekaran
+May 18, 2018
+Good and detailed explanation! Thank you Taka san :-).
+
+1
+
+Applause from Taka Mizutori (author)
+Go to the profile of Sandro Tchikovani
+Sandro Tchikovani
+Aug 23, 2017
+Great article!
+
+1
+
+Applause from Taka Mizutori (author)
+Go to the profile of Jay Mayu
+Jay Mayu
+Jul 4, 2017
+Thanks alot for taking time to write the entire process. You are awesome!
+
+1
+
+Applause from Taka Mizutori (author)
+Go to the profile of SRIKANTH
+SRIKANTH
+Oct 18, 2017
+Thank you very much, good job
+
+2
+
+Applause from Taka Mizutori (author)
+Go to the profile of Una Titz
+Una Titz
+Apr 26, 2018
+This is a really cool TUT, it was super helpful. I myself am writing in the domain and really appreciate all the localisation input I can gather. Thx!
+
+1
+
+Applause from Taka Mizutori (author)
+Go to the profile of Kim Mok
+Kim Mok
+Sep 23, 2017
+Easy to read and follow!
+
+1
+
+Applause from Taka Mizutori (author)
+Go to the profile of Ravi Prajapat
+Ravi Prajapat
+Nov 17, 2017
+Finally I have worked on localisation too --Thanks Taka Mizutori to write this post.
+
+1
+
+Applause from Taka Mizutori (author)
+Go to the profile of Joseph Brr
+Joseph Brr
+Apr 29, 2018
+very good,
+is that posible changing language inside the app? for example on a properties menu
+
+1
+
+Applause from Taka Mizutori (author)
+Go to the profile of Spirit Echo
+Spirit Echo
+Aug 29, 2017
+Thank for good tutorial.
